@@ -1,0 +1,12 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://clvstk05eyuy2"]
+
+[ext_resource type="StyleBox" uid="uid://dj7mn5oebhgf8" path="res://my_style_box_flat.tres" id="1_0bcey"]
+
+[resource]
+Button/colors/font_color = Color(1, 1, 1, 1)
+Button/styles/hover_pressed = ExtResource("1_0bcey")
+Button/styles/normal = ExtResource("1_0bcey")
+Label/colors/font_color = Color(1, 1, 1, 1)
+Label/styles/normal = ExtResource("1_0bcey")
+TextEdit/colors/font_color = Color(1, 1, 1, 1)
+TextEdit/styles/normal = ExtResource("1_0bcey")

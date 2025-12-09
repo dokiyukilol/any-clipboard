@@ -1,0 +1,172 @@
+[gd_scene load_steps=16 format=3 uid="uid://c4hlwpbnxqalh"]
+
+[ext_resource type="Script" uid="uid://bs43cvtyvo8pt" path="res://dev_find.gd" id="1_0xm2m"]
+[ext_resource type="Script" uid="uid://b7f2m3x1fr7aj" path="res://show_peers.gd" id="1_5vw27"]
+[ext_resource type="Script" uid="uid://p8fpfcrge2t5" path="res://main.gd" id="1_w48qg"]
+[ext_resource type="Script" uid="uid://duijvm2aqt44o" path="res://mid.gd" id="2_1bvp3"]
+[ext_resource type="Theme" uid="uid://clvstk05eyuy2" path="res://main_thme.tres" id="2_4c57u"]
+[ext_resource type="Script" uid="uid://dyjgu2ldcdqgo" path="res://enet.gd" id="2_h2yge"]
+[ext_resource type="Script" uid="uid://bb2335btpxihe" path="res://status.gd" id="2_kek77"]
+[ext_resource type="Script" uid="uid://ca81715yvn0fx" path="res://v_box_container.gd" id="2_ycdy4"]
+[ext_resource type="Script" uid="uid://da20u1yg671pl" path="res://udp.gd" id="3_h2yge"]
+[ext_resource type="Script" uid="uid://cig6e8s1ktmsv" path="res://display_clients.gd" id="3_ycdy4"]
+[ext_resource type="Script" uid="uid://b4q70d3m8b6my" path="res://display_clips.gd" id="4_w48qg"]
+[ext_resource type="Script" uid="uid://cdxl1j3p7d28r" path="res://clip.gd" id="5_lquwl"]
+[ext_resource type="Script" uid="uid://bxe2tyg0gos5m" path="res://server_input.gd" id="5_vivmo"]
+[ext_resource type="Script" uid="uid://bk4cmh7q1alj7" path="res://peers.gd" id="6_7mycd"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7dm0k"]
+bg_color = Color(1, 1, 1, 1)
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_w48qg")
+
+[node name="Back" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_7dm0k")
+
+[node name="ShowPeers" type="Label" parent="Back"]
+visible = false
+z_index = 205
+layout_mode = 0
+offset_right = 412.0
+offset_bottom = 105.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 71
+script = ExtResource("1_5vw27")
+
+[node name="Timer" type="Timer" parent="Back/ShowPeers"]
+
+[node name="Label" type="Label" parent="Back"]
+visible = false
+layout_mode = 0
+offset_left = 736.0
+offset_top = -1.0
+offset_right = 1148.0
+offset_bottom = 104.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 71
+
+[node name="MarginContainer" type="MarginContainer" parent="Back"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="HSplitContainer" type="HSplitContainer" parent="Back/MarginContainer"]
+layout_mode = 2
+touch_dragger_enabled = true
+drag_area_highlight_in_editor = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Back/MarginContainer/HSplitContainer"]
+layout_mode = 2
+script = ExtResource("2_ycdy4")
+
+[node name="DisplayClients" type="Button" parent="Back/MarginContainer/HSplitContainer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("2_4c57u")
+text = "客户端列表"
+script = ExtResource("3_ycdy4")
+
+[node name="DisplayClips" type="Button" parent="Back/MarginContainer/HSplitContainer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("2_4c57u")
+text = "远程剪贴板"
+script = ExtResource("4_w48qg")
+
+[node name="ServerInput" type="Button" parent="Back/MarginContainer/HSplitContainer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("2_4c57u")
+text = "连接服务器"
+script = ExtResource("5_vivmo")
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="Back/MarginContainer/HSplitContainer"]
+layout_mode = 2
+
+[node name="Status" type="Label" parent="Back/MarginContainer/HSplitContainer/VBoxContainer2"]
+layout_mode = 2
+theme = ExtResource("2_4c57u")
+script = ExtResource("2_kek77")
+
+[node name="MarginContainer" type="MarginContainer" parent="Back/MarginContainer/HSplitContainer/VBoxContainer2"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="TextEdit" type="TextEdit" parent="Back/MarginContainer/HSplitContainer/VBoxContainer2/MarginContainer"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+theme = ExtResource("2_4c57u")
+wrap_mode = 1
+autowrap_mode = 1
+
+[node name="Clip" type="Node" parent="."]
+script = ExtResource("5_lquwl")
+
+[node name="clipboard_update_timer" type="Timer" parent="Clip"]
+wait_time = 0.3
+autostart = true
+
+[node name="DevFind" type="Node" parent="."]
+script = ExtResource("1_0xm2m")
+
+[node name="Mid" type="Node" parent="DevFind"]
+script = ExtResource("2_1bvp3")
+
+[node name="Enet" type="Node" parent="DevFind"]
+script = ExtResource("2_h2yge")
+
+[node name="UDP" type="Node" parent="DevFind"]
+script = ExtResource("3_h2yge")
+
+[node name="has_broadcast_timer" type="Timer" parent="DevFind/UDP"]
+wait_time = 4096.0
+one_shot = true
+
+[node name="udp_broadcast_timer" type="Timer" parent="DevFind/UDP"]
+wait_time = 0.5
+
+[node name="Peers" type="Node" parent="."]
+script = ExtResource("6_7mycd")
+
+[node name="Button" type="Button" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 244.0
+offset_top = 142.0
+offset_right = 530.0
+offset_bottom = 298.0
+text = "udp emit"
+
+[connection signal="timeout" from="Back/ShowPeers/Timer" to="Back/ShowPeers" method="_on_timer_timeout"]
+[connection signal="pressed" from="Back/MarginContainer/HSplitContainer/VBoxContainer/DisplayClients" to="Back/MarginContainer/HSplitContainer/VBoxContainer/DisplayClients" method="_on_pressed"]
+[connection signal="pressed" from="Back/MarginContainer/HSplitContainer/VBoxContainer/DisplayClips" to="Back/MarginContainer/HSplitContainer/VBoxContainer/DisplayClips" method="_on_pressed"]
+[connection signal="pressed" from="Back/MarginContainer/HSplitContainer/VBoxContainer/ServerInput" to="Back/MarginContainer/HSplitContainer/VBoxContainer/ServerInput" method="_on_pressed"]
+[connection signal="try_connect_server" from="Back/MarginContainer/HSplitContainer/VBoxContainer/ServerInput" to="DevFind" method="_on_server_input_try_connect_server"]
+[connection signal="text_changed" from="Back/MarginContainer/HSplitContainer/VBoxContainer2/MarginContainer/TextEdit" to="Back/MarginContainer/HSplitContainer/VBoxContainer/ServerInput" method="_on_text_edit_text_changed"]
+[connection signal="clipboard_rpc" from="Clip" to="DevFind/Enet" method="_on_clip_clipboard_rpc"]
+[connection signal="clipboard_updated" from="Clip" to="Back/MarginContainer/HSplitContainer/VBoxContainer/DisplayClips" method="_on_clip_clipboard_updated"]
+[connection signal="timeout" from="Clip/clipboard_update_timer" to="Clip" method="_on_clipboard_update_timer_timeout"]
+[connection signal="enet_status_changed" from="DevFind" to="Back/MarginContainer/HSplitContainer/VBoxContainer2/Status" method="_on_dev_find_enet_status_changed"]
+[connection signal="peers_changed" from="DevFind" to="Back/MarginContainer/HSplitContainer/VBoxContainer/DisplayClients" method="_on_dev_find_peers_changed"]
+[connection signal="enet_created" from="DevFind/Enet" to="DevFind" method="_on_enet_enet_created"]
+[connection signal="peers_update" from="DevFind/Enet" to="DevFind" method="_on_enet_peers_update"]
+[connection signal="timeout" from="DevFind/UDP/has_broadcast_timer" to="DevFind/UDP" method="_on_has_broadcast_timer_timeout"]
+[connection signal="timeout" from="DevFind/UDP/udp_broadcast_timer" to="DevFind/UDP" method="_on_udp_broadcast_timer_timeout"]
+[connection signal="pressed" from="Button" to="DevFind" method="_on_button_pressed"]
